@@ -1,0 +1,21 @@
+#
+# General patterns to exclude everywhere
+#
+syntax:regexp
+# Eclipse project settings folders
+(^|/)\.settings/
+
+# Maven build folder
+(^|/)target/
+
+# Eclipse classpath settings
+(^|/)\.classpath$
+
+# Eclipse metadata
+(^|/)\.metadata/
+
+# Eclipse project settings
+(^|/)\.project$
+
+# Database files
+(^|/).+\.db$

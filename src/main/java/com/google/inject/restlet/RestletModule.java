@@ -35,6 +35,7 @@ public class RestletModule extends ServletModule {
 	@Override
 	protected final void configureServlets() {
 		serve(path).with(RestServlet.class);
+		bind(RestServlet.class);
 		
 		install(new InternalRestletModule()); // skipped if already installed
 		

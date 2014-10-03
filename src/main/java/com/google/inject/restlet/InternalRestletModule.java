@@ -8,6 +8,7 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.restlet.argumentprovider.ProviderFactory;
 import com.google.inject.restlet.internal.RuntimeDelegateImpl;
+import com.google.inject.servlet.GuiceServletWorkaround;
 
 public class InternalRestletModule extends AbstractModule {
 	private Multibinder<TypeConverter<?>> converterBinder;
@@ -18,7 +19,8 @@ public class InternalRestletModule extends AbstractModule {
 		
 		install(new FactoryModuleBuilder().build(ProviderFactory.class));
 		
-		Multibinder.newSetBinder(binder(), BodyReader.class).addBinding().to(GsonBodyReader.class);
+		Multibinder.newSetBinder(binder(), BodyReader.class)
+			.addBinding().to(GsonBodyReader.class);
 		
 		converterBinder = Multibinder.newSetBinder(binder(), new TypeLiteral<TypeConverter<?>>(){});
 		bindConverter(new PrimitiveTypeConverter<>(byte.class, Byte.class));
@@ -46,6 +48,8 @@ public class InternalRestletModule extends AbstractModule {
 		});
 		bindConverter(new FromStringMethodConverter("valueOf"));
 		bindConverter(new FromStringMethodConverter("fromString"));
+		
+		install(new GuiceServletWorkaround());
 	}
 	
 	protected final void bindConverter(TypeConverter<?> converter) {
